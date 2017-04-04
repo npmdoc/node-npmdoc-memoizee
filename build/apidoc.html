@@ -1,0 +1,702 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/medikoo/memoizee#readme"
+
+    >memoizee (v0.4.4)</a>
+</h1>
+<h4>Memoize/cache function results</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.memoizee">module memoizee</a><ol>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">memoizee.</span>profile</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">memoizee.</span>registered_extensions</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.memoizee.profile">module memoizee.profile</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.memoizee.profile.log">
+            function <span class="apidocSignatureSpan">memoizee.profile.</span>log
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">memoizee.profile.</span>statistics</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.memoizee.registered_extensions">module memoizee.registered_extensions</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.memoizee.registered_extensions.async">
+            function <span class="apidocSignatureSpan">memoizee.registered_extensions.</span>async
+            <span class="apidocSignatureSpan">(tbi, conf)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.memoizee.registered_extensions.dispose">
+            function <span class="apidocSignatureSpan">memoizee.registered_extensions.</span>dispose
+            <span class="apidocSignatureSpan">(dispose, conf, options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.memoizee.registered_extensions.max">
+            function <span class="apidocSignatureSpan">memoizee.registered_extensions.</span>max
+            <span class="apidocSignatureSpan">(max, conf, options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.memoizee.registered_extensions.maxAge">
+            function <span class="apidocSignatureSpan">memoizee.registered_extensions.</span>maxAge
+            <span class="apidocSignatureSpan">(maxAge, conf, options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.memoizee.registered_extensions.promise">
+            function <span class="apidocSignatureSpan">memoizee.registered_extensions.</span>promise
+            <span class="apidocSignatureSpan">(mode, conf)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.memoizee.registered_extensions.refCounter">
+            function <span class="apidocSignatureSpan">memoizee.registered_extensions.</span>refCounter
+            <span class="apidocSignatureSpan">(ignore, conf, options)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.memoizee" id="apidoc.module.memoizee">module memoizee</a></h1>
+
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.memoizee.profile" id="apidoc.module.memoizee.profile">module memoizee.profile</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.memoizee.profile.log" id="apidoc.element.memoizee.profile.log">
+        function <span class="apidocSignatureSpan">memoizee.profile.</span>log
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">log = function () {
+	var initial, cached, ordered, ipad, cpad, ppad, toPrc, log;
+
+	initial = cached = 0;
+	ordered = [];
+
+	toPrc = function (initial, cached) {
+		if (!initial &#x26;&#x26; !cached) {
+			return &#x27;0.00&#x27;;
+		}
+		return ((cached / (initial + cached)) * 100).toFixed(2);
+	};
+
+	log = &#x22;------------------------------------------------------------\n&#x22;;
+	log += &#x22;Memoize statistics:\n\n&#x22;;
+
+	forEach(stats, function (data, name) {
+		initial += data.initial;
+		cached += data.cached;
+		ordered.push([name, data]);
+	}, null, function (a, b) {
+		return (this[b].initial + this[b].cached) -
+			(this[a].initial + this[a].cached);
+	});
+
+	ipad = partial.call(pad, &#x22; &#x22;,
+		max(String(initial).length, &#x22;Init&#x22;.length));
+	cpad = partial.call(pad, &#x22; &#x22;, max(String(cached).length, &#x22;Cache&#x22;.length));
+	ppad = partial.call(pad, &#x22; &#x22;, &#x22;%Cache&#x22;.length);
+	log += ipad.call(&#x22;Init&#x22;) + &#x22;  &#x22; +
+		cpad.call(&#x22;Cache&#x22;) + &#x22;  &#x22; +
+		ppad.call(&#x22;%Cache&#x22;) + &#x22;  Source location\n&#x22;;
+	log += ipad.call(initial) + &#x22;  &#x22; +
+		cpad.call(cached) + &#x22;  &#x22; +
+		ppad.call(toPrc(initial, cached)) + &#x22;  (all)\n&#x22;;
+	ordered.forEach(function (data) {
+		var name = data[0];
+		data = data[1];
+		log += ipad.call(data.initial) + &#x22;  &#x22; +
+			cpad.call(data.cached) + &#x22;  &#x22; +
+			ppad.call(toPrc(data.initial, data.cached)) + &#x22;  &#x22; + name + &#x22;\n&#x22;;
+	});
+	log += &#x22;------------------------------------------------------------\n&#x22;;
+	return log;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+var memProfile = require(&#x27;memoizee/profile&#x27;);
+```
+
+Access statistics at any time:
+
+```javascript
+memProfile.statistics;         // Statistcs accessible for programmatical use
+console.<span class="apidocCodeKeywordSpan">log</span>(memProfile.log()); // Output statistics data in readable form
+```
+
+Example console output:
+
+```
+------------------------------------------------------------
+Memoize statistics:
+...</pre></li>
+    </ul>
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.memoizee.registered_extensions" id="apidoc.module.memoizee.registered_extensions">module memoizee.registered_extensions</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.memoizee.registered_extensions.async" id="apidoc.element.memoizee.registered_extensions.async">
+        function <span class="apidocSignatureSpan">memoizee.registered_extensions.</span>async
+        <span class="apidocSignatureSpan">(tbi, conf)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">async = function (tbi, conf) {
+	var waiting = create(null), cache = create(null)
+	  , base = conf.memoized, original = conf.original
+	  , currentCallback, currentContext, currentArgs;
+
+	// Initial
+	conf.memoized = defineLength(function (arg) {
+		var args = arguments, last = args[args.length - 1];
+		if (typeof last === &#x27;function&#x27;) {
+			currentCallback = last;
+			args = slice.call(args, 0, -1);
+		}
+		return base.apply(currentContext = this, currentArgs = args);
+	}, base);
+	try { mixin(conf.memoized, base); } catch (ignore) {}
+
+	// From cache (sync)
+	conf.on(&#x27;get&#x27;, function (id) {
+		var cb, context, args;
+		if (!currentCallback) return;
+
+		// Unresolved
+		if (waiting[id]) {
+			if (typeof waiting[id] === &#x27;function&#x27;) waiting[id] = [waiting[id], currentCallback];
+			else waiting[id].push(currentCallback);
+			currentCallback = null;
+			return;
+		}
+
+		// Resolved, assure next tick invocation
+		cb = currentCallback;
+		context = currentContext;
+		args = currentArgs;
+		currentCallback = currentContext = currentArgs = null;
+		nextTick(function () {
+			var data;
+			if (hasOwnProperty.call(cache, id)) {
+				data = cache[id];
+				conf.emit(&#x27;getasync&#x27;, id, args, context);
+				apply.call(cb, data.context, data.args);
+			} else {
+				// Purged in a meantime, we shouldn&#x27;t rely on cached value, recall
+				currentCallback = cb;
+				currentContext = context;
+				currentArgs = args;
+				base.apply(context, args);
+			}
+		});
+	});
+
+	// Not from cache
+	conf.original = function () {
+		var args, cb, origCb, result;
+		if (!currentCallback) return apply.call(original, this, arguments);
+		args = aFrom(arguments);
+		cb = function self(err) {
+			var cb, args, id = self.id;
+			if (id == null) {
+				// Shouldn&#x27;t happen, means async callback was called sync way
+				nextTick(apply.bind(self, this, arguments));
+				return;
+			}
+			delete self.id;
+			cb = waiting[id];
+			delete waiting[id];
+			if (!cb) {
+				// Already processed,
+				// outcome of race condition: asyncFn(1, cb), asyncFn.clear(), asyncFn(1, cb)
+				return;
+			}
+			args = aFrom(arguments);
+			if (conf.has(id)) {
+				if (err) {
+					conf.delete(id);
+				} else {
+					cache[id] = { context: this, args: args };
+					conf.emit(&#x27;setasync&#x27;, id, (typeof cb === &#x27;function&#x27;) ? 1 : cb.length);
+				}
+			}
+			if (typeof cb === &#x27;function&#x27;) {
+				result = apply.call(cb, this, args);
+			} else {
+				cb.forEach(function (cb) { result = apply.call(cb, this, args); }, this);
+			}
+			return result;
+		};
+		origCb = currentCallback;
+		currentCallback = currentContext = currentArgs = null;
+		args.push(cb);
+		result = apply.call(original, this, args);
+		cb.cb = origCb;
+		currentCallback = cb;
+		return result;
+	};
+
+	// After not from cache call
+	conf.on(&#x27;set&#x27;, function (id) {
+		if (!currentCallback) {
+			conf.delete(id);
+			return;
+		}
+		if (waiting[id]) {
+			// Race condition: asyncFn(1, cb), asyncFn.clear(), asyncFn(1, cb)
+			if (typeof waiting[id] === &#x27;function&#x27;) waiting[id] = [waiting[id], currentCallback.cb];
+			else waiting[id].push(currentCallback.cb);
+		} else {
+			waiting[id] = currentCallback.cb;
+		}
+		delete currentCallback.cb;
+		currentCallback.id = id;
+		currentCallback = null;
+	});
+
+	// On delete
+	conf.on(&#x27;delete&#x27;, function (id) {
+		var result;
+		// If false, we don&#x27;t have value yet, so we assume that intention is not
+		// to memoize this call. After value is obtained we don&#x27;t cache it but
+		// gracefully pass to callback
+		if (hasOwnProperty.call(waiting, id)) return;
+		if (!cache[id]) return;
+		result = cache[id];
+		delete cache[id];
+		conf.emit(&#x27;deleteasync&#x27;, id, slice.call(result.args, 1));
+	});
+
+	// On clear
+	conf.on(&#x27;clear&#x27;, function () {
+		var oldCache = cache;
+		cache = create(null);
+		conf.emit(&#x27;clearasync&#x27;, objectMap(oldCache, function (data) {
+			return slice.call(data.args, 1);
+		}));
+	});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.memoizee.registered_extensions.dispose" id="apidoc.element.memoizee.registered_extensions.dispose">
+        function <span class="apidocSignatureSpan">memoizee.registered_extensions.</span>dispose
+        <span class="apidocSignatureSpan">(dispose, conf, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">dispose = function (dispose, conf, options) {
+	var del;
+	callable(dispose);
+	if ((options.async &#x26;&#x26; extensions.async) || (options.promise &#x26;&#x26; extensions.promise)) {
+		conf.on(&#x27;deleteasync&#x27;, del = function (id, resultArray) {
+			apply.call(dispose, null, resultArray);
+		});
+		conf.on(&#x27;clearasync&#x27;, function (cache) {
+			forEach(cache, function (result, id) { del(id, result); });
+		});
+		return;
+	}
+	conf.on(&#x27;delete&#x27;, del = function (id, result) { dispose(result); });
+	conf.on(&#x27;clear&#x27;, function (cache) {
+		forEach(cache, function (result, id) { del(id, result); });
+	});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.memoizee.registered_extensions.max" id="apidoc.element.memoizee.registered_extensions.max">
+        function <span class="apidocSignatureSpan">memoizee.registered_extensions.</span>max
+        <span class="apidocSignatureSpan">(max, conf, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">max = function (max, conf, options) {
+	var postfix, queue, hit;
+
+	max = toPosInteger(max);
+	if (!max) return;
+
+	queue = lruQueue(max);
+	postfix = ((options.async &#x26;&#x26; extensions.async) || (options.promise &#x26;&#x26; extensions.promise))
+		? &#x27;async&#x27; : &#x27;&#x27;;
+
+	conf.on(&#x27;set&#x27; + postfix, hit = function (id) {
+		id = queue.hit(id);
+		if (id === undefined) return;
+		conf.delete(id);
+	});
+	conf.on(&#x27;get&#x27; + postfix, hit);
+	conf.on(&#x27;delete&#x27; + postfix, queue.delete);
+	conf.on(&#x27;clear&#x27; + postfix, queue.clear);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.memoizee.registered_extensions.maxAge" id="apidoc.element.memoizee.registered_extensions.maxAge">
+        function <span class="apidocSignatureSpan">memoizee.registered_extensions.</span>maxAge
+        <span class="apidocSignatureSpan">(maxAge, conf, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">maxAge = function (maxAge, conf, options) {
+	var timeouts, postfix, preFetchAge, preFetchTimeouts;
+
+	maxAge = timeout(maxAge);
+	if (!maxAge) return;
+
+	timeouts = create(null);
+	postfix = ((options.async &#x26;&#x26; extensions.async) || (options.promise &#x26;&#x26; extensions.promise))
+		? &#x27;async&#x27; : &#x27;&#x27;;
+	conf.on(&#x27;set&#x27; + postfix, function (id) {
+		timeouts[id] = setTimeout(function () { conf.delete(id); }, maxAge);
+		if (!preFetchTimeouts) return;
+		if (preFetchTimeouts[id]) {
+			if (preFetchTimeouts[id] !== &#x27;nextTick&#x27;) clearTimeout(preFetchTimeouts[id]);
+		}
+		preFetchTimeouts[id] = setTimeout(function () {
+			delete preFetchTimeouts[id];
+		}, preFetchAge);
+	});
+	conf.on(&#x27;delete&#x27; + postfix, function (id) {
+		clearTimeout(timeouts[id]);
+		delete timeouts[id];
+		if (!preFetchTimeouts) return;
+		if (preFetchTimeouts[id] !== &#x27;nextTick&#x27;) clearTimeout(preFetchTimeouts[id]);
+		delete preFetchTimeouts[id];
+	});
+
+	if (options.preFetch) {
+		if ((options.preFetch === true) || isNaN(options.preFetch)) {
+			preFetchAge = 0.333;
+		} else {
+			preFetchAge = max(min(Number(options.preFetch), 1), 0);
+		}
+		if (preFetchAge) {
+			preFetchTimeouts = {};
+			preFetchAge = (1 - preFetchAge) * maxAge;
+			conf.on(&#x27;get&#x27; + postfix, function (id, args, context) {
+				if (!preFetchTimeouts[id]) {
+					preFetchTimeouts[id] = &#x27;nextTick&#x27;;
+					nextTick(function () {
+						var result;
+						if (preFetchTimeouts[id] !== &#x27;nextTick&#x27;) return;
+						delete preFetchTimeouts[id];
+						conf.delete(id);
+						if (options.async) {
+							args = aFrom(args);
+							args.push(noop);
+						}
+						result = conf.memoized.apply(context, args);
+						if (options.promise) {
+							// Supress eventual error warnings
+							if (isPromise(result)) {
+								if (typeof result.done === &#x27;function&#x27;) result.done(noop, noop);
+								else result.then(noop, noop);
+							}
+						}
+					});
+				}
+			});
+		}
+	}
+
+	conf.on(&#x27;clear&#x27; + postfix, function () {
+		forEach(timeouts, function (id) { clearTimeout(id); });
+		timeouts = {};
+		if (preFetchTimeouts) {
+			forEach(preFetchTimeouts, function (id) {
+				if (id !== &#x27;nextTick&#x27;) clearTimeout(id);
+			});
+			preFetchTimeouts = {};
+		}
+	});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.memoizee.registered_extensions.promise" id="apidoc.element.memoizee.registered_extensions.promise">
+        function <span class="apidocSignatureSpan">memoizee.registered_extensions.</span>promise
+        <span class="apidocSignatureSpan">(mode, conf)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">promise = function (mode, conf) {
+	var waiting = create(null), cache = create(null), promises = create(null);
+
+	// After not from cache call
+	conf.on(&#x27;set&#x27;, function (id, ignore, promise) {
+		var isFailed = false;
+
+		if (!isPromise(promise)) {
+			// Non promise result
+			cache[id] = promise;
+			conf.emit(&#x27;setasync&#x27;, id, 1);
+			return;
+		}
+		waiting[id] = 1;
+		promises[id] = promise;
+		var onSuccess = function (result) {
+			var count = waiting[id];
+			if (isFailed) {
+				throw new Error(&#x22;Memoizee error: Promise resolved with both failure and success,&#x22; +
+					&#x22; this can be result of unordered done &#x26; finally resolution.\n&#x22; +
+					&#x22;Instead of `promise: true` consider configuring memoization via `promise: &#x27;then&#x27;` or &#x22; +
+					&#x22;`promise: &#x27;done&#x27;&#x22;);
+			}
+			if (!count) return; // deleted from cache before resolved
+			delete waiting[id];
+			cache[id] = result;
+			conf.emit(&#x27;setasync&#x27;, id, count);
+		};
+		var onFailure = function () {
+			isFailed = true;
+			if (!waiting[id]) return; // deleted from cache (or succeed in case of finally)
+			delete waiting[id];
+			delete promises[id];
+			conf.delete(id);
+		};
+
+		if ((mode !== &#x27;then&#x27;) &#x26;&#x26; (typeof promise.done === &#x27;function&#x27;)) {
+			// Optimal promise resolution
+			if ((mode !== &#x27;done&#x27;) &#x26;&#x26; (typeof promise.finally === &#x27;function&#x27;)) {
+				// Use &#x27;finally&#x27; to not register error handling (still proper behavior is subject to
+				// used implementation, if library throws unconditionally even on handled errors
+				// switch to &#x27;then&#x27; mode)
+				promise.done(onSuccess);
+				promise.finally(onFailure);
+			} else {
+				// With no `finally` side effect is that it mutes any eventual
+				// &#x22;Unhandled error&#x22; events on returned promise
+				promise.done(onSuccess, onFailure);
+			}
+		} else {
+			// With no `done` it&#x27;s best we can do.
+			// Side effect is that it mutes any eventual &#x22;Unhandled error&#x22; events on returned promise
+			promise.then(function (result) {
+				nextTick(onSuccess.bind(this, result));
+			}, function () {
+				nextTick(onFailure);
+			});
+		}
+	});
+
+	// From cache (sync)
+	conf.on(&#x27;get&#x27;, function (id, args, context) {
+		var promise;
+		if (waiting[id]) {
+			++waiting[id]; // Still waiting
+			return;
+		}
+		promise = promises[id];
+		var emit = function () { conf.emit(&#x27;getasync&#x27;, id, args, context); };
+		if (isPromise(promise)) {
+			if (typeof promise.done === &#x27;function&#x27;) promise.done(emit);
+			else promise.then(function () { nextTick(emit); });
+		} else {
+			emit();
+		}
+	});
+
+	// On delete
+	conf.on(&#x27;delete&#x27;, function (id) {
+		delete promises[id];
+		if (waiting[id]) {
+			delete waiting[id];
+			return; // Not yet resolved
+		}
+		if (!hasOwnProperty.call(cache, id)) return;
+		var result = cache[id];
+		delete cache[id];
+		conf.emit(&#x27;deleteasync&#x27;, id, [result]);
+	});
+
+	// On clear
+	conf.on(&#x27;clear&#x27;, function () {
+		var oldCache = cache;
+		cache = create(null);
+		waiting = create(null);
+		promises = create(null);
+		conf.emit(&#x27;clearasync&#x27;, objectMap(oldCache, function (data) { return [data]; }));
+	});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.memoizee.registered_extensions.refCounter" id="apidoc.element.memoizee.registered_extensions.refCounter">
+        function <span class="apidocSignatureSpan">memoizee.registered_extensions.</span>refCounter
+        <span class="apidocSignatureSpan">(ignore, conf, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">refCounter = function (ignore, conf, options) {
+	var cache, postfix;
+
+	cache = create(null);
+	postfix = ((options.async &#x26;&#x26; extensions.async) || (options.promise &#x26;&#x26; extensions.promise))
+		? &#x27;async&#x27; : &#x27;&#x27;;
+
+	conf.on(&#x27;set&#x27; + postfix, function (id, length) { cache[id] = length || 1; });
+	conf.on(&#x27;get&#x27; + postfix, function (id) { ++cache[id]; });
+	conf.on(&#x27;delete&#x27; + postfix, function (id) { delete cache[id]; });
+	conf.on(&#x27;clear&#x27; + postfix, function () { cache = {}; });
+
+	defineProperties(conf.memoized, {
+		deleteRef: d(function () {
+			var id = conf.get(arguments);
+			if (id === null) return null;
+			if (!cache[id]) return null;
+			if (!--cache[id]) {
+				conf.delete(id);
+				return true;
+			}
+			return false;
+		}),
+		getRefCount: d(function () {
+			var id = conf.get(arguments);
+			if (id === null) return 0;
+			if (!cache[id]) return 0;
+			return cache[id];
+		})
+	});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
