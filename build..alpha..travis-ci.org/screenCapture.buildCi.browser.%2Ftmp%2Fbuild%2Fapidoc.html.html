@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/medikoo/memoizee#readme"
-
-    >memoizee (v0.4.4)</a>
+    <a href="https://github.com/medikoo/memoizee#readme">memoizee (v0.4.4)</a>
 </h1>
 <h4>Memoize/cache function results</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.memoizee">module memoizee</a><ol>
 
@@ -512,25 +505,25 @@
 		if (length !== 0) {
 			if (options.primitive) {
 				if (length === false) {
-					options.normalizer = require(&#x27;./normalizers/primitive&#x27;);
-				} else if (length &#x3e; 1) {
-					options.normalizer = require(&#x27;./normalizers/get-primitive-fixed&#x27;)(length);
+					options.normalizer = require('./normalizers/primitive');
+				} else if (length &gt; 1) {
+					options.normalizer = require('./normalizers/get-primitive-fixed')(length);
 				}
 			} else {
-				if (length === false) options.normalizer = require(&#x27;./normalizers/get&#x27;)();
-				else if (length === 1) options.normalizer = require(&#x27;./normalizers/get-1&#x27;)();
-				else options.normalizer = require(&#x27;./normalizers/get-fixed&#x27;)(length);
+				if (length === false) options.normalizer = require('./normalizers/get')();
+				else if (length === 1) options.normalizer = require('./normalizers/get-1')();
+				else options.normalizer = require('./normalizers/get-fixed')(length);
 			}
 		}
 	}
 
 	// Assure extensions
-	if (options.async) require(&#x27;./ext/async&#x27;);
-	if (options.promise) require(&#x27;./ext/promise&#x27;);
-	if (options.dispose) require(&#x27;./ext/dispose&#x27;);
-	if (options.maxAge) require(&#x27;./ext/max-age&#x27;);
-	if (options.max) require(&#x27;./ext/max&#x27;);
-	if (options.refCounter) require(&#x27;./ext/ref-counter&#x27;);
+	if (options.async) require('./ext/async');
+	if (options.promise) require('./ext/promise');
+	if (options.dispose) require('./ext/dispose');
+	if (options.maxAge) require('./ext/max-age');
+	if (options.max) require('./ext/max');
+	if (options.refCounter) require('./ext/ref-counter');
 
 	return plain(fn, options);
 }</pre></li>
@@ -569,7 +562,7 @@
 			id = get(args);
 			if (id !== null) {
 				if (hasOwnProperty.call(cache, id)) {
-					if (getListeners) conf.emit(&#x27;get&#x27;, id, args, this);
+					if (getListeners) conf.emit('get', id, args, this);
 					return cache[id];
 				}
 			}
@@ -577,29 +570,29 @@
 			else result = apply.call(original, this, args);
 			if (id === null) {
 				id = get(args);
-				if (id !== null) throw customError(&#x22;Circular invocation&#x22;, &#x27;CIRCULAR_INVOCATION&#x27;);
+				if (id !== null) throw customError("Circular invocation", 'CIRCULAR_INVOCATION');
 				id = set(args);
 			} else if (hasOwnProperty.call(cache, id)) {
-				throw customError(&#x22;Circular invocation&#x22;, &#x27;CIRCULAR_INVOCATION&#x27;);
+				throw customError("Circular invocation", 'CIRCULAR_INVOCATION');
 			}
 			cache[id] = result;
-			if (setListeners) conf.emit(&#x27;set&#x27;, id, null, result);
+			if (setListeners) conf.emit('set', id, null, result);
 			return result;
 		}, memLength);
 	} else if (length === 0) {
 		memoized = function () {
 			var result;
-			if (hasOwnProperty.call(cache, &#x27;data&#x27;)) {
-				if (getListeners) conf.emit(&#x27;get&#x27;, &#x27;data&#x27;, arguments, this);
+			if (hasOwnProperty.call(cache, 'data')) {
+				if (getListeners) conf.emit('get', 'data', arguments, this);
 				return cache.data;
 			}
 			if (!arguments.length) result = call.call(original, this);
 			else result = apply.call(original, this, arguments);
-			if (hasOwnProperty.call(cache, &#x27;data&#x27;)) {
-				throw customError(&#x22;Circular invocation&#x22;, &#x27;CIRCULAR_INVOCATION&#x27;);
+			if (hasOwnProperty.call(cache, 'data')) {
+				throw customError("Circular invocation", 'CIRCULAR_INVOCATION');
 			}
 			cache.data = result;
-			if (setListeners) conf.emit(&#x27;set&#x27;, &#x27;data&#x27;, null, result);
+			if (setListeners) conf.emit('set', 'data', null, result);
 			return result;
 		};
 	} else {
@@ -608,16 +601,16 @@
 			if (resolve) args = resolve(arguments);
 			id = String(args[0]);
 			if (hasOwnProperty.call(cache, id)) {
-				if (getListeners) conf.emit(&#x27;get&#x27;, id, args, this);
+				if (getListeners) conf.emit('get', id, args, this);
 				return cache[id];
 			}
 			if (args.length === 1) result = call.call(original, this, args[0]);
 			else result = apply.call(original, this, args);
 			if (hasOwnProperty.call(cache, id)) {
-				throw customError(&#x22;Circular invocation&#x22;, &#x27;CIRCULAR_INVOCATION&#x27;);
+				throw customError("Circular invocation", 'CIRCULAR_INVOCATION');
 			}
 			cache[id] = result;
-			if (setListeners) conf.emit(&#x27;set&#x27;, id, null, result);
+			if (setListeners) conf.emit('set', id, null, result);
 			return result;
 		};
 	}
@@ -636,18 +629,18 @@
 			if (del) del(id);
 			result = cache[id];
 			delete cache[id];
-			if (deleteListeners) conf.emit(&#x27;delete&#x27;, id, result);
+			if (deleteListeners) conf.emit('delete', id, result);
 		},
 		clear: function () {
 			var oldCache = cache;
 			if (clear) clear();
 			cache = create(null);
-			conf.emit(&#x27;clear&#x27;, oldCache);
+			conf.emit('clear', oldCache);
 		},
 		on: function (type, listener) {
-			if (type === &#x27;get&#x27;) getListeners = true;
-			else if (type === &#x27;set&#x27;) setListeners = true;
-			else if (type === &#x27;delete&#x27;) deleteListeners = true;
+			if (type === 'get') getListeners = true;
+			else if (type === 'set') setListeners = true;
+			else if (type === 'delete') deleteListeners = true;
 			return on.call(this, type, listener);
 		},
 		emit: emit,
@@ -662,7 +655,7 @@
 			conf.delete(id);
 		}, memLength);
 	} else if (length === 0) {
-		extDel = function () { return conf.delete(&#x27;data&#x27;); };
+		extDel = function () { return conf.delete('data'); };
 	} else {
 		extDel = function (arg) {
 			if (resolve) arg = resolve(arguments)[0];
@@ -697,7 +690,7 @@
 			var index = 0, set = map, i, length = args.length;
 			if (length === 0) return set[length] || null;
 			if ((set = set[length])) {
-				while (index &#x3c; (length - 1)) {
+				while (index &lt; (length - 1)) {
 					i = indexOf.call(set[0], args[index]);
 					if (i === -1) return null;
 					set = set[1][i];
@@ -718,7 +711,7 @@
 					set[length] = [[], []];
 				}
 				set = set[length];
-				while (index &#x3c; (length - 1)) {
+				while (index &lt; (length - 1)) {
 					i = indexOf.call(set[0], args[index]);
 					if (i === -1) {
 						i = set[0].push(args[index]) - 1;
@@ -742,7 +735,7 @@
 			if (length === 0) {
 				delete set[length];
 			} else if ((set = set[length])) {
-				while (index &#x3c; (length - 1)) {
+				while (index &lt; (length - 1)) {
 					i = indexOf.call(set[0], args[index]);
 					if (i === -1) {
 						return;
@@ -758,7 +751,7 @@
 				id = set[1][i];
 				set[0].splice(i, 1);
 				set[1].splice(i, 1);
-				while (!set[0].length &#x26;&#x26; path.length) {
+				while (!set[0].length &amp;&amp; path.length) {
 					i = path.pop();
 					set = path.pop();
 					set[0].splice(i, 1);
@@ -774,10 +767,10 @@
 	};
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-	conf.on(&#x27;set&#x27; + postfix, function (id, length) { cache[id] = length || 1; });
-	conf.on(&#x27;get&#x27; + postfix, function (id) { ++cache[id]; });
-	conf.on(&#x27;delete&#x27; + postfix, function (id) { delete cache[id]; });
-	conf.on(&#x27;clear&#x27; + postfix, function () { cache = {}; });
+	conf.on('set' + postfix, function (id, length) { cache[id] = length || 1; });
+	conf.on('get' + postfix, function (id) { ++cache[id]; });
+	conf.on('delete' + postfix, function (id) { delete cache[id]; });
+	conf.on('clear' + postfix, function () { cache = {}; });
 
 	defineProperties(conf.memoized, {
 		deleteRef: d(function () {
@@ -843,7 +836,7 @@
 	return {
 		get: function (args) {
 			var index = 0, set = map, i;
-			while (index &#x3c; (length - 1)) {
+			while (index &lt; (length - 1)) {
 				i = indexOf.call(set[0], args[index]);
 				if (i === -1) return null;
 				set = set[1][i];
@@ -855,7 +848,7 @@
 		},
 		set: function (args) {
 			var index = 0, set = map, i;
-			while (index &#x3c; (length - 1)) {
+			while (index &lt; (length - 1)) {
 				i = indexOf.call(set[0], args[index]);
 				if (i === -1) {
 					i = set[0].push(args[index]) - 1;
@@ -874,7 +867,7 @@
 		},
 		delete: function (id) {
 			var index = 0, set = map, i, path = [], args = cache[id];
-			while (index &#x3c; (length - 1)) {
+			while (index &lt; (length - 1)) {
 				i = indexOf.call(set[0], args[index]);
 				if (i === -1) {
 					return;
@@ -890,7 +883,7 @@
 			id = set[1][i];
 			set[0].splice(i, 1);
 			set[1].splice(i, 1);
-			while (!set[0].length &#x26;&#x26; path.length) {
+			while (!set[0].length &amp;&amp; path.length) {
 				i = path.pop();
 				set = path.pop();
 				set[0].splice(i, 1);
@@ -918,11 +911,11 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">get_primitive_fixed = function (length) {
 	if (!length) {
-		return function () { return &#x27;&#x27;; };
+		return function () { return ''; };
 	}
 	return function (args) {
 		var id = String(args[0]), i = 0, l = length;
-		while (--l) { id += &#x27;\u0001&#x27; + args[++i]; }
+		while (--l) { id += '\u0001' + args[++i]; }
 		return id;
 	};
 }</pre></li>
@@ -946,7 +939,7 @@
 				if (options.getNormalizer) {
 					options = normalizeOpts(options);
 					if (length === undefined) {
-						length = resolveLength(options.length, fn.length, options.async &#x26;&#x26; extensions.async);
+						length = resolveLength(options.length, fn.length, options.async &amp;&amp; extensions.async);
 					}
 					options.normalizer = options.getNormalizer(length);
 					delete options.getNormalizer;
@@ -976,7 +969,7 @@
 				if (options.getNormalizer) {
 					options = normalizeOpts(options);
 					if (length === undefined) {
-						length = resolveLength(options.length, fn.length, options.async &#x26;&#x26; extensions.async);
+						length = resolveLength(options.length, fn.length, options.async &amp;&amp; extensions.async);
 					}
 					options.normalizer = options.getNormalizer(length);
 					delete options.getNormalizer;
@@ -1004,15 +997,15 @@
 	callable(fn);
 	options = Object(arguments[1]);
 
-	if (options.async &#x26;&#x26; options.promise) {
-		throw new Error(&#x22;Options &#x27;async&#x27; and &#x27;promise&#x27; cannot be used together&#x22;);
+	if (options.async &amp;&amp; options.promise) {
+		throw new Error("Options 'async' and 'promise' cannot be used together");
 	}
 
 	// Do not memoize already memoized function
-	if (hasOwnProperty.call(fn, &#x27;__memoized__&#x27;) &#x26;&#x26; !options.force) return fn;
+	if (hasOwnProperty.call(fn, '__memoized__') &amp;&amp; !options.force) return fn;
 
 	// Resolve length;
-	length = resolveLength(options.length, fn.length, options.async &#x26;&#x26; extensions.async);
+	length = resolveLength(options.length, fn.length, options.async &amp;&amp; extensions.async);
 
 	// Configure cache map
 	conf = configure(fn, length, options);
@@ -1041,9 +1034,9 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">primitive = function (args) {
 	var id, i, length = args.length;
-	if (!length) return &#x27;\u0002&#x27;;
+	if (!length) return '\u0002';
 	id = String(args[i = 0]);
-	while (--length) id += &#x27;\u0001&#x27; + args[++i];
+	while (--length) id += '\u0001' + args[++i];
 	return id;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -1062,8 +1055,8 @@
 	var length;
 	if (isNaN(optsLength)) {
 		length = fnLength;
-		if (!(length &#x3e;= 0)) return 1;
-		if (isAsync &#x26;&#x26; length) return length - 1;
+		if (!(length &gt;= 0)) return 1;
+		if (isAsync &amp;&amp; length) return length - 1;
 		return length;
 	}
 	if (optsLength === false) return false;
@@ -1083,7 +1076,7 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">resolve_normalize = function (userNormalizer) {
 	var normalizer;
-	if (typeof userNormalizer === &#x27;function&#x27;) return { set: userNormalizer, get: userNormalizer };
+	if (typeof userNormalizer === 'function') return { set: userNormalizer, get: userNormalizer };
 	normalizer = { get: callable(userNormalizer.get) };
 	if (userNormalizer.set !== undefined) {
 		normalizer.set = callable(userNormalizer.set);
@@ -1147,25 +1140,25 @@
 		callable(fn);
 
 		// Do not memoize already memoized function
-		if (hasOwnProperty.call(fn, &#x27;__memoized__&#x27;) &#x26;&#x26; !options.force) return fn;
+		if (hasOwnProperty.call(fn, '__memoized__') &amp;&amp; !options.force) return fn;
 
-		length = resolveLength(options.length, fn.length, options.async &#x26;&#x26; extensions.async);
+		length = resolveLength(options.length, fn.length, options.async &amp;&amp; extensions.async);
 		options.length = length ? length - 1 : 0;
 		map = new WeakMap();
 
 		if (options.resolvers) resolve = resolveResolve(options.resolvers);
 		if (options.normalizer) normalizer = resolveNormalize(options.normalizer);
 
-		if ((length === 1) &#x26;&#x26; !normalizer &#x26;&#x26; !(options.async &#x26;&#x26; extensions.async) &#x26;&#x26;
-				!(options.dispose &#x26;&#x26; extensions.dispose) &#x26;&#x26; !(options.maxAge &#x26;&#x26; extensions.maxAge) &#x26;&#x26;
-				!(options.max &#x26;&#x26; extensions.max) &#x26;&#x26; !(options.refCounter &#x26;&#x26; extensions.refCounter)) {
+		if ((length === 1) &amp;&amp; !normalizer &amp;&amp; !(options.async &amp;&amp; extensions.async) &amp;&amp;
+				!(options.dispose &amp;&amp; extensions.dispose) &amp;&amp; !(options.maxAge &amp;&amp; extensions.maxAge) &amp;&amp;
+				!(options.max &amp;&amp; extensions.max) &amp;&amp; !(options.refCounter &amp;&amp; extensions.refCounter)) {
 			return defineProperties(function (obj) {
 				var result, args = arguments;
 				if (resolve) args = resolve(args);
 				obj = args[0];
 				if (map.has(obj)) return map.get(obj);
 				result = fn.apply(this, args);
-				if (map.has(obj)) throw customError(&#x22;Circular invocation&#x22;, &#x27;CIRCULAR_INVOCATION&#x27;);
+				if (map.has(obj)) throw customError("Circular invocation", 'CIRCULAR_INVOCATION');
 				map.set(obj, result);
 				return result;
 			}, {
@@ -1253,25 +1246,25 @@
 		callable(fn);
 
 		// Do not memoize already memoized function
-		if (hasOwnProperty.call(fn, &#x27;__memoized__&#x27;) &#x26;&#x26; !options.force) return fn;
+		if (hasOwnProperty.call(fn, '__memoized__') &amp;&amp; !options.force) return fn;
 
-		length = resolveLength(options.length, fn.length, options.async &#x26;&#x26; extensions.async);
+		length = resolveLength(options.length, fn.length, options.async &amp;&amp; extensions.async);
 		options.length = length ? length - 1 : 0;
 		map = new WeakMap();
 
 		if (options.resolvers) resolve = resolveResolve(options.resolvers);
 		if (options.normalizer) normalizer = resolveNormalize(options.normalizer);
 
-		if ((length === 1) &#x26;&#x26; !normalizer &#x26;&#x26; !(options.async &#x26;&#x26; extensions.async) &#x26;&#x26;
-				!(options.dispose &#x26;&#x26; extensions.dispose) &#x26;&#x26; !(options.maxAge &#x26;&#x26; extensions.maxAge) &#x26;&#x26;
-				!(options.max &#x26;&#x26; extensions.max) &#x26;&#x26; !(options.refCounter &#x26;&#x26; extensions.refCounter)) {
+		if ((length === 1) &amp;&amp; !normalizer &amp;&amp; !(options.async &amp;&amp; extensions.async) &amp;&amp;
+				!(options.dispose &amp;&amp; extensions.dispose) &amp;&amp; !(options.maxAge &amp;&amp; extensions.maxAge) &amp;&amp;
+				!(options.max &amp;&amp; extensions.max) &amp;&amp; !(options.refCounter &amp;&amp; extensions.refCounter)) {
 			return defineProperties(function (obj) {
 				var result, args = arguments;
 				if (resolve) args = resolve(args);
 				obj = args[0];
 				if (map.has(obj)) return map.get(obj);
 				result = fn.apply(this, args);
-				if (map.has(obj)) throw customError(&#x22;Circular invocation&#x22;, &#x27;CIRCULAR_INVOCATION&#x27;);
+				if (map.has(obj)) throw customError("Circular invocation", 'CIRCULAR_INVOCATION');
 				map.set(obj, result);
 				return result;
 			}, {
@@ -1384,7 +1377,7 @@
 			id = get(args);
 			if (id !== null) {
 				if (hasOwnProperty.call(cache, id)) {
-					if (getListeners) conf.emit(&#x27;get&#x27;, id, args, this);
+					if (getListeners) conf.emit('get', id, args, this);
 					return cache[id];
 				}
 			}
@@ -1392,29 +1385,29 @@
 			else result = apply.call(original, this, args);
 			if (id === null) {
 				id = get(args);
-				if (id !== null) throw customError(&#x22;Circular invocation&#x22;, &#x27;CIRCULAR_INVOCATION&#x27;);
+				if (id !== null) throw customError("Circular invocation", 'CIRCULAR_INVOCATION');
 				id = set(args);
 			} else if (hasOwnProperty.call(cache, id)) {
-				throw customError(&#x22;Circular invocation&#x22;, &#x27;CIRCULAR_INVOCATION&#x27;);
+				throw customError("Circular invocation", 'CIRCULAR_INVOCATION');
 			}
 			cache[id] = result;
-			if (setListeners) conf.emit(&#x27;set&#x27;, id, null, result);
+			if (setListeners) conf.emit('set', id, null, result);
 			return result;
 		}, memLength);
 	} else if (length === 0) {
 		memoized = function () {
 			var result;
-			if (hasOwnProperty.call(cache, &#x27;data&#x27;)) {
-				if (getListeners) conf.emit(&#x27;get&#x27;, &#x27;data&#x27;, arguments, this);
+			if (hasOwnProperty.call(cache, 'data')) {
+				if (getListeners) conf.emit('get', 'data', arguments, this);
 				return cache.data;
 			}
 			if (!arguments.length) result = call.call(original, this);
 			else result = apply.call(original, this, arguments);
-			if (hasOwnProperty.call(cache, &#x27;data&#x27;)) {
-				throw customError(&#x22;Circular invocation&#x22;, &#x27;CIRCULAR_INVOCATION&#x27;);
+			if (hasOwnProperty.call(cache, 'data')) {
+				throw customError("Circular invocation", 'CIRCULAR_INVOCATION');
 			}
 			cache.data = result;
-			if (setListeners) conf.emit(&#x27;set&#x27;, &#x27;data&#x27;, null, result);
+			if (setListeners) conf.emit('set', 'data', null, result);
 			return result;
 		};
 	} else {
@@ -1423,16 +1416,16 @@
 			if (resolve) args = resolve(arguments);
 			id = String(args[0]);
 			if (hasOwnProperty.call(cache, id)) {
-				if (getListeners) conf.emit(&#x27;get&#x27;, id, args, this);
+				if (getListeners) conf.emit('get', id, args, this);
 				return cache[id];
 			}
 			if (args.length === 1) result = call.call(original, this, args[0]);
 			else result = apply.call(original, this, args);
 			if (hasOwnProperty.call(cache, id)) {
-				throw customError(&#x22;Circular invocation&#x22;, &#x27;CIRCULAR_INVOCATION&#x27;);
+				throw customError("Circular invocation", 'CIRCULAR_INVOCATION');
 			}
 			cache[id] = result;
-			if (setListeners) conf.emit(&#x27;set&#x27;, id, null, result);
+			if (setListeners) conf.emit('set', id, null, result);
 			return result;
 		};
 	}
@@ -1451,18 +1444,18 @@
 			if (del) del(id);
 			result = cache[id];
 			delete cache[id];
-			if (deleteListeners) conf.emit(&#x27;delete&#x27;, id, result);
+			if (deleteListeners) conf.emit('delete', id, result);
 		},
 		clear: function () {
 			var oldCache = cache;
 			if (clear) clear();
 			cache = create(null);
-			conf.emit(&#x27;clear&#x27;, oldCache);
+			conf.emit('clear', oldCache);
 		},
 		on: function (type, listener) {
-			if (type === &#x27;get&#x27;) getListeners = true;
-			else if (type === &#x27;set&#x27;) setListeners = true;
-			else if (type === &#x27;delete&#x27;) deleteListeners = true;
+			if (type === 'get') getListeners = true;
+			else if (type === 'set') setListeners = true;
+			else if (type === 'delete') deleteListeners = true;
 			return on.call(this, type, listener);
 		},
 		emit: emit,
@@ -1477,7 +1470,7 @@
 			conf.delete(id);
 		}, memLength);
 	} else if (length === 0) {
-		extDel = function () { return conf.delete(&#x27;data&#x27;); };
+		extDel = function () { return conf.delete('data'); };
 	} else {
 		extDel = function (arg) {
 			if (resolve) arg = resolve(arguments)[0];
@@ -1517,7 +1510,7 @@
 			var index = 0, set = map, i, length = args.length;
 			if (length === 0) return set[length] || null;
 			if ((set = set[length])) {
-				while (index &#x3c; (length - 1)) {
+				while (index &lt; (length - 1)) {
 					i = indexOf.call(set[0], args[index]);
 					if (i === -1) return null;
 					set = set[1][i];
@@ -1538,7 +1531,7 @@
 					set[length] = [[], []];
 				}
 				set = set[length];
-				while (index &#x3c; (length - 1)) {
+				while (index &lt; (length - 1)) {
 					i = indexOf.call(set[0], args[index]);
 					if (i === -1) {
 						i = set[0].push(args[index]) - 1;
@@ -1562,7 +1555,7 @@
 			if (length === 0) {
 				delete set[length];
 			} else if ((set = set[length])) {
-				while (index &#x3c; (length - 1)) {
+				while (index &lt; (length - 1)) {
 					i = indexOf.call(set[0], args[index]);
 					if (i === -1) {
 						return;
@@ -1578,7 +1571,7 @@
 				id = set[1][i];
 				set[0].splice(i, 1);
 				set[1].splice(i, 1);
-				while (!set[0].length &#x26;&#x26; path.length) {
+				while (!set[0].length &amp;&amp; path.length) {
 					i = path.pop();
 					set = path.pop();
 					set[0].splice(i, 1);
@@ -1594,10 +1587,10 @@
 	};
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-	conf.on(&#x27;set&#x27; + postfix, function (id, length) { cache[id] = length || 1; });
-	conf.on(&#x27;get&#x27; + postfix, function (id) { ++cache[id]; });
-	conf.on(&#x27;delete&#x27; + postfix, function (id) { delete cache[id]; });
-	conf.on(&#x27;clear&#x27; + postfix, function () { cache = {}; });
+	conf.on('set' + postfix, function (id, length) { cache[id] = length || 1; });
+	conf.on('get' + postfix, function (id) { ++cache[id]; });
+	conf.on('delete' + postfix, function (id) { delete cache[id]; });
+	conf.on('clear' + postfix, function () { cache = {}; });
 
 	defineProperties(conf.memoized, {
 		deleteRef: d(function () {
@@ -1673,7 +1666,7 @@
 	return {
 		get: function (args) {
 			var index = 0, set = map, i;
-			while (index &#x3c; (length - 1)) {
+			while (index &lt; (length - 1)) {
 				i = indexOf.call(set[0], args[index]);
 				if (i === -1) return null;
 				set = set[1][i];
@@ -1685,7 +1678,7 @@
 		},
 		set: function (args) {
 			var index = 0, set = map, i;
-			while (index &#x3c; (length - 1)) {
+			while (index &lt; (length - 1)) {
 				i = indexOf.call(set[0], args[index]);
 				if (i === -1) {
 					i = set[0].push(args[index]) - 1;
@@ -1704,7 +1697,7 @@
 		},
 		delete: function (id) {
 			var index = 0, set = map, i, path = [], args = cache[id];
-			while (index &#x3c; (length - 1)) {
+			while (index &lt; (length - 1)) {
 				i = indexOf.call(set[0], args[index]);
 				if (i === -1) {
 					return;
@@ -1720,7 +1713,7 @@
 			id = set[1][i];
 			set[0].splice(i, 1);
 			set[1].splice(i, 1);
-			while (!set[0].length &#x26;&#x26; path.length) {
+			while (!set[0].length &amp;&amp; path.length) {
 				i = path.pop();
 				set = path.pop();
 				set[0].splice(i, 1);
@@ -1753,11 +1746,11 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">get_primitive_fixed = function (length) {
 	if (!length) {
-		return function () { return &#x27;&#x27;; };
+		return function () { return ''; };
 	}
 	return function (args) {
 		var id = String(args[0]), i = 0, l = length;
-		while (--l) { id += &#x27;\u0001&#x27; + args[++i]; }
+		while (--l) { id += '\u0001' + args[++i]; }
 		return id;
 	};
 }</pre></li>
@@ -1786,7 +1779,7 @@
 				if (options.getNormalizer) {
 					options = normalizeOpts(options);
 					if (length === undefined) {
-						length = resolveLength(options.length, fn.length, options.async &#x26;&#x26; extensions.async);
+						length = resolveLength(options.length, fn.length, options.async &amp;&amp; extensions.async);
 					}
 					options.normalizer = options.getNormalizer(length);
 					delete options.getNormalizer;
@@ -1821,7 +1814,7 @@
 				if (options.getNormalizer) {
 					options = normalizeOpts(options);
 					if (length === undefined) {
-						length = resolveLength(options.length, fn.length, options.async &#x26;&#x26; extensions.async);
+						length = resolveLength(options.length, fn.length, options.async &amp;&amp; extensions.async);
 					}
 					options.normalizer = options.getNormalizer(length);
 					delete options.getNormalizer;
@@ -1854,15 +1847,15 @@
 	callable(fn);
 	options = Object(arguments[1]);
 
-	if (options.async &#x26;&#x26; options.promise) {
-		throw new Error(&#x22;Options &#x27;async&#x27; and &#x27;promise&#x27; cannot be used together&#x22;);
+	if (options.async &amp;&amp; options.promise) {
+		throw new Error("Options 'async' and 'promise' cannot be used together");
 	}
 
 	// Do not memoize already memoized function
-	if (hasOwnProperty.call(fn, &#x27;__memoized__&#x27;) &#x26;&#x26; !options.force) return fn;
+	if (hasOwnProperty.call(fn, '__memoized__') &amp;&amp; !options.force) return fn;
 
 	// Resolve length;
-	length = resolveLength(options.length, fn.length, options.async &#x26;&#x26; extensions.async);
+	length = resolveLength(options.length, fn.length, options.async &amp;&amp; extensions.async);
 
 	// Configure cache map
 	conf = configure(fn, length, options);
@@ -1896,9 +1889,9 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">primitive = function (args) {
 	var id, i, length = args.length;
-	if (!length) return &#x27;\u0002&#x27;;
+	if (!length) return '\u0002';
 	id = String(args[i = 0]);
-	while (--length) id += &#x27;\u0001&#x27; + args[++i];
+	while (--length) id += '\u0001' + args[++i];
 	return id;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -1925,14 +1918,14 @@
 	ordered = [];
 
 	toPrc = function (initial, cached) {
-		if (!initial &#x26;&#x26; !cached) {
-			return &#x27;0.00&#x27;;
+		if (!initial &amp;&amp; !cached) {
+			return '0.00';
 		}
 		return ((cached / (initial + cached)) * 100).toFixed(2);
 	};
 
-	log = &#x22;------------------------------------------------------------\n&#x22;;
-	log += &#x22;Memoize statistics:\n\n&#x22;;
+	log = "------------------------------------------------------------\n";
+	log += "Memoize statistics:\n\n";
 
 	forEach(stats, function (data, name) {
 		initial += data.initial;
@@ -1943,28 +1936,28 @@
 			(this[a].initial + this[a].cached);
 	});
 
-	ipad = partial.call(pad, &#x22; &#x22;,
-		max(String(initial).length, &#x22;Init&#x22;.length));
-	cpad = partial.call(pad, &#x22; &#x22;, max(String(cached).length, &#x22;Cache&#x22;.length));
-	ppad = partial.call(pad, &#x22; &#x22;, &#x22;%Cache&#x22;.length);
-	log += ipad.call(&#x22;Init&#x22;) + &#x22;  &#x22; +
-		cpad.call(&#x22;Cache&#x22;) + &#x22;  &#x22; +
-		ppad.call(&#x22;%Cache&#x22;) + &#x22;  Source location\n&#x22;;
-	log += ipad.call(initial) + &#x22;  &#x22; +
-		cpad.call(cached) + &#x22;  &#x22; +
-		ppad.call(toPrc(initial, cached)) + &#x22;  (all)\n&#x22;;
+	ipad = partial.call(pad, " ",
+		max(String(initial).length, "Init".length));
+	cpad = partial.call(pad, " ", max(String(cached).length, "Cache".length));
+	ppad = partial.call(pad, " ", "%Cache".length);
+	log += ipad.call("Init") + "  " +
+		cpad.call("Cache") + "  " +
+		ppad.call("%Cache") + "  Source location\n";
+	log += ipad.call(initial) + "  " +
+		cpad.call(cached) + "  " +
+		ppad.call(toPrc(initial, cached)) + "  (all)\n";
 	ordered.forEach(function (data) {
 		var name = data[0];
 		data = data[1];
-		log += ipad.call(data.initial) + &#x22;  &#x22; +
-			cpad.call(data.cached) + &#x22;  &#x22; +
-			ppad.call(toPrc(data.initial, data.cached)) + &#x22;  &#x22; + name + &#x22;\n&#x22;;
+		log += ipad.call(data.initial) + "  " +
+			cpad.call(data.cached) + "  " +
+			ppad.call(toPrc(data.initial, data.cached)) + "  " + name + "\n";
 	});
-	log += &#x22;------------------------------------------------------------\n&#x22;;
+	log += "------------------------------------------------------------\n";
 	return log;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-var memProfile = require(&#x27;memoizee/profile&#x27;);
+var memProfile = require('memoizee/profile');
 ```
 
 Access statistics at any time:
@@ -2006,7 +1999,7 @@ Memoize statistics:
 	// Initial
 	conf.memoized = defineLength(function (arg) {
 		var args = arguments, last = args[args.length - 1];
-		if (typeof last === &#x27;function&#x27;) {
+		if (typeof last === 'function') {
 			currentCallback = last;
 			args = slice.call(args, 0, -1);
 		}
@@ -2015,13 +2008,13 @@ Memoize statistics:
 	try { mixin(conf.memoized, base); } catch (ignore) {}
 
 	// From cache (sync)
-	conf.on(&#x27;get&#x27;, function (id) {
+	conf.on('get', function (id) {
 		var cb, context, args;
 		if (!currentCallback) return;
 
 		// Unresolved
 		if (waiting[id]) {
-			if (typeof waiting[id] === &#x27;function&#x27;) waiting[id] = [waiting[id], currentCallback];
+			if (typeof waiting[id] === 'function') waiting[id] = [waiting[id], currentCallback];
 			else waiting[id].push(currentCallback);
 			currentCallback = null;
 			return;
@@ -2036,10 +2029,10 @@ Memoize statistics:
 			var data;
 			if (hasOwnProperty.call(cache, id)) {
 				data = cache[id];
-				conf.emit(&#x27;getasync&#x27;, id, args, context);
+				conf.emit('getasync', id, args, context);
 				apply.call(cb, data.context, data.args);
 			} else {
-				// Purged in a meantime, we shouldn&#x27;t rely on cached value, recall
+				// Purged in a meantime, we shouldn't rely on cached value, recall
 				currentCallback = cb;
 				currentContext = context;
 				currentArgs = args;
@@ -2056,7 +2049,7 @@ Memoize statistics:
 		cb = function self(err) {
 			var cb, args, id = self.id;
 			if (id == null) {
-				// Shouldn&#x27;t happen, means async callback was called sync way
+				// Shouldn't happen, means async callback was called sync way
 				nextTick(apply.bind(self, this, arguments));
 				return;
 			}
@@ -2074,10 +2067,10 @@ Memoize statistics:
 					conf.delete(id);
 				} else {
 					cache[id] = { context: this, args: args };
-					conf.emit(&#x27;setasync&#x27;, id, (typeof cb === &#x27;function&#x27;) ? 1 : cb.length);
+					conf.emit('setasync', id, (typeof cb === 'function') ? 1 : cb.length);
 				}
 			}
-			if (typeof cb === &#x27;function&#x27;) {
+			if (typeof cb === 'function') {
 				result = apply.call(cb, this, args);
 			} else {
 				cb.forEach(function (cb) { result = apply.call(cb, this, args); }, this);
@@ -2094,14 +2087,14 @@ Memoize statistics:
 	};
 
 	// After not from cache call
-	conf.on(&#x27;set&#x27;, function (id) {
+	conf.on('set', function (id) {
 		if (!currentCallback) {
 			conf.delete(id);
 			return;
 		}
 		if (waiting[id]) {
 			// Race condition: asyncFn(1, cb), asyncFn.clear(), asyncFn(1, cb)
-			if (typeof waiting[id] === &#x27;function&#x27;) waiting[id] = [waiting[id], currentCallback.cb];
+			if (typeof waiting[id] === 'function') waiting[id] = [waiting[id], currentCallback.cb];
 			else waiting[id].push(currentCallback.cb);
 		} else {
 			waiting[id] = currentCallback.cb;
@@ -2112,23 +2105,23 @@ Memoize statistics:
 	});
 
 	// On delete
-	conf.on(&#x27;delete&#x27;, function (id) {
+	conf.on('delete', function (id) {
 		var result;
-		// If false, we don&#x27;t have value yet, so we assume that intention is not
-		// to memoize this call. After value is obtained we don&#x27;t cache it but
+		// If false, we don't have value yet, so we assume that intention is not
+		// to memoize this call. After value is obtained we don't cache it but
 		// gracefully pass to callback
 		if (hasOwnProperty.call(waiting, id)) return;
 		if (!cache[id]) return;
 		result = cache[id];
 		delete cache[id];
-		conf.emit(&#x27;deleteasync&#x27;, id, slice.call(result.args, 1));
+		conf.emit('deleteasync', id, slice.call(result.args, 1));
 	});
 
 	// On clear
-	conf.on(&#x27;clear&#x27;, function () {
+	conf.on('clear', function () {
 		var oldCache = cache;
 		cache = create(null);
-		conf.emit(&#x27;clearasync&#x27;, objectMap(oldCache, function (data) {
+		conf.emit('clearasync', objectMap(oldCache, function (data) {
 			return slice.call(data.args, 1);
 		}));
 	});
@@ -2148,17 +2141,17 @@ Memoize statistics:
     <li>description and source-code<pre class="apidocCodePre">dispose = function (dispose, conf, options) {
 	var del;
 	callable(dispose);
-	if ((options.async &#x26;&#x26; extensions.async) || (options.promise &#x26;&#x26; extensions.promise)) {
-		conf.on(&#x27;deleteasync&#x27;, del = function (id, resultArray) {
+	if ((options.async &amp;&amp; extensions.async) || (options.promise &amp;&amp; extensions.promise)) {
+		conf.on('deleteasync', del = function (id, resultArray) {
 			apply.call(dispose, null, resultArray);
 		});
-		conf.on(&#x27;clearasync&#x27;, function (cache) {
+		conf.on('clearasync', function (cache) {
 			forEach(cache, function (result, id) { del(id, result); });
 		});
 		return;
 	}
-	conf.on(&#x27;delete&#x27;, del = function (id, result) { dispose(result); });
-	conf.on(&#x27;clear&#x27;, function (cache) {
+	conf.on('delete', del = function (id, result) { dispose(result); });
+	conf.on('clear', function (cache) {
 		forEach(cache, function (result, id) { del(id, result); });
 	});
 }</pre></li>
@@ -2181,17 +2174,17 @@ Memoize statistics:
 	if (!max) return;
 
 	queue = lruQueue(max);
-	postfix = ((options.async &#x26;&#x26; extensions.async) || (options.promise &#x26;&#x26; extensions.promise))
-		? &#x27;async&#x27; : &#x27;&#x27;;
+	postfix = ((options.async &amp;&amp; extensions.async) || (options.promise &amp;&amp; extensions.promise))
+		? 'async' : '';
 
-	conf.on(&#x27;set&#x27; + postfix, hit = function (id) {
+	conf.on('set' + postfix, hit = function (id) {
 		id = queue.hit(id);
 		if (id === undefined) return;
 		conf.delete(id);
 	});
-	conf.on(&#x27;get&#x27; + postfix, hit);
-	conf.on(&#x27;delete&#x27; + postfix, queue.delete);
-	conf.on(&#x27;clear&#x27; + postfix, queue.clear);
+	conf.on('get' + postfix, hit);
+	conf.on('delete' + postfix, queue.delete);
+	conf.on('clear' + postfix, queue.clear);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2212,23 +2205,23 @@ Memoize statistics:
 	if (!maxAge) return;
 
 	timeouts = create(null);
-	postfix = ((options.async &#x26;&#x26; extensions.async) || (options.promise &#x26;&#x26; extensions.promise))
-		? &#x27;async&#x27; : &#x27;&#x27;;
-	conf.on(&#x27;set&#x27; + postfix, function (id) {
+	postfix = ((options.async &amp;&amp; extensions.async) || (options.promise &amp;&amp; extensions.promise))
+		? 'async' : '';
+	conf.on('set' + postfix, function (id) {
 		timeouts[id] = setTimeout(function () { conf.delete(id); }, maxAge);
 		if (!preFetchTimeouts) return;
 		if (preFetchTimeouts[id]) {
-			if (preFetchTimeouts[id] !== &#x27;nextTick&#x27;) clearTimeout(preFetchTimeouts[id]);
+			if (preFetchTimeouts[id] !== 'nextTick') clearTimeout(preFetchTimeouts[id]);
 		}
 		preFetchTimeouts[id] = setTimeout(function () {
 			delete preFetchTimeouts[id];
 		}, preFetchAge);
 	});
-	conf.on(&#x27;delete&#x27; + postfix, function (id) {
+	conf.on('delete' + postfix, function (id) {
 		clearTimeout(timeouts[id]);
 		delete timeouts[id];
 		if (!preFetchTimeouts) return;
-		if (preFetchTimeouts[id] !== &#x27;nextTick&#x27;) clearTimeout(preFetchTimeouts[id]);
+		if (preFetchTimeouts[id] !== 'nextTick') clearTimeout(preFetchTimeouts[id]);
 		delete preFetchTimeouts[id];
 	});
 
@@ -2241,12 +2234,12 @@ Memoize statistics:
 		if (preFetchAge) {
 			preFetchTimeouts = {};
 			preFetchAge = (1 - preFetchAge) * maxAge;
-			conf.on(&#x27;get&#x27; + postfix, function (id, args, context) {
+			conf.on('get' + postfix, function (id, args, context) {
 				if (!preFetchTimeouts[id]) {
-					preFetchTimeouts[id] = &#x27;nextTick&#x27;;
+					preFetchTimeouts[id] = 'nextTick';
 					nextTick(function () {
 						var result;
-						if (preFetchTimeouts[id] !== &#x27;nextTick&#x27;) return;
+						if (preFetchTimeouts[id] !== 'nextTick') return;
 						delete preFetchTimeouts[id];
 						conf.delete(id);
 						if (options.async) {
@@ -2257,7 +2250,7 @@ Memoize statistics:
 						if (options.promise) {
 							// Supress eventual error warnings
 							if (isPromise(result)) {
-								if (typeof result.done === &#x27;function&#x27;) result.done(noop, noop);
+								if (typeof result.done === 'function') result.done(noop, noop);
 								else result.then(noop, noop);
 							}
 						}
@@ -2267,12 +2260,12 @@ Memoize statistics:
 		}
 	}
 
-	conf.on(&#x27;clear&#x27; + postfix, function () {
+	conf.on('clear' + postfix, function () {
 		forEach(timeouts, function (id) { clearTimeout(id); });
 		timeouts = {};
 		if (preFetchTimeouts) {
 			forEach(preFetchTimeouts, function (id) {
-				if (id !== &#x27;nextTick&#x27;) clearTimeout(id);
+				if (id !== 'nextTick') clearTimeout(id);
 			});
 			preFetchTimeouts = {};
 		}
@@ -2294,13 +2287,13 @@ Memoize statistics:
 	var waiting = create(null), cache = create(null), promises = create(null);
 
 	// After not from cache call
-	conf.on(&#x27;set&#x27;, function (id, ignore, promise) {
+	conf.on('set', function (id, ignore, promise) {
 		var isFailed = false;
 
 		if (!isPromise(promise)) {
 			// Non promise result
 			cache[id] = promise;
-			conf.emit(&#x27;setasync&#x27;, id, 1);
+			conf.emit('setasync', id, 1);
 			return;
 		}
 		waiting[id] = 1;
@@ -2308,15 +2301,15 @@ Memoize statistics:
 		var onSuccess = function (result) {
 			var count = waiting[id];
 			if (isFailed) {
-				throw new Error(&#x22;Memoizee error: Promise resolved with both failure and success,&#x22; +
-					&#x22; this can be result of unordered done &#x26; finally resolution.\n&#x22; +
-					&#x22;Instead of `promise: true` consider configuring memoization via `promise: &#x27;then&#x27;` or &#x22; +
-					&#x22;`promise: &#x27;done&#x27;&#x22;);
+				throw new Error("Memoizee error: Promise resolved with both failure and success," +
+					" this can be result of unordered done &amp; finally resolution.\n" +
+					"Instead of `promise: true` consider configuring memoization via `promise: 'then'` or " +
+					"`promise: 'done'");
 			}
 			if (!count) return; // deleted from cache before resolved
 			delete waiting[id];
 			cache[id] = result;
-			conf.emit(&#x27;setasync&#x27;, id, count);
+			conf.emit('setasync', id, count);
 		};
 		var onFailure = function () {
 			isFailed = true;
@@ -2326,22 +2319,22 @@ Memoize statistics:
 			conf.delete(id);
 		};
 
-		if ((mode !== &#x27;then&#x27;) &#x26;&#x26; (typeof promise.done === &#x27;function&#x27;)) {
+		if ((mode !== 'then') &amp;&amp; (typeof promise.done === 'function')) {
 			// Optimal promise resolution
-			if ((mode !== &#x27;done&#x27;) &#x26;&#x26; (typeof promise.finally === &#x27;function&#x27;)) {
-				// Use &#x27;finally&#x27; to not register error handling (still proper behavior is subject to
+			if ((mode !== 'done') &amp;&amp; (typeof promise.finally === 'function')) {
+				// Use 'finally' to not register error handling (still proper behavior is subject to
 				// used implementation, if library throws unconditionally even on handled errors
-				// switch to &#x27;then&#x27; mode)
+				// switch to 'then' mode)
 				promise.done(onSuccess);
 				promise.finally(onFailure);
 			} else {
 				// With no `finally` side effect is that it mutes any eventual
-				// &#x22;Unhandled error&#x22; events on returned promise
+				// "Unhandled error" events on returned promise
 				promise.done(onSuccess, onFailure);
 			}
 		} else {
-			// With no `done` it&#x27;s best we can do.
-			// Side effect is that it mutes any eventual &#x22;Unhandled error&#x22; events on returned promise
+			// With no `done` it's best we can do.
+			// Side effect is that it mutes any eventual "Unhandled error" events on returned promise
 			promise.then(function (result) {
 				nextTick(onSuccess.bind(this, result));
 			}, function () {
@@ -2351,16 +2344,16 @@ Memoize statistics:
 	});
 
 	// From cache (sync)
-	conf.on(&#x27;get&#x27;, function (id, args, context) {
+	conf.on('get', function (id, args, context) {
 		var promise;
 		if (waiting[id]) {
 			++waiting[id]; // Still waiting
 			return;
 		}
 		promise = promises[id];
-		var emit = function () { conf.emit(&#x27;getasync&#x27;, id, args, context); };
+		var emit = function () { conf.emit('getasync', id, args, context); };
 		if (isPromise(promise)) {
-			if (typeof promise.done === &#x27;function&#x27;) promise.done(emit);
+			if (typeof promise.done === 'function') promise.done(emit);
 			else promise.then(function () { nextTick(emit); });
 		} else {
 			emit();
@@ -2368,7 +2361,7 @@ Memoize statistics:
 	});
 
 	// On delete
-	conf.on(&#x27;delete&#x27;, function (id) {
+	conf.on('delete', function (id) {
 		delete promises[id];
 		if (waiting[id]) {
 			delete waiting[id];
@@ -2377,16 +2370,16 @@ Memoize statistics:
 		if (!hasOwnProperty.call(cache, id)) return;
 		var result = cache[id];
 		delete cache[id];
-		conf.emit(&#x27;deleteasync&#x27;, id, [result]);
+		conf.emit('deleteasync', id, [result]);
 	});
 
 	// On clear
-	conf.on(&#x27;clear&#x27;, function () {
+	conf.on('clear', function () {
 		var oldCache = cache;
 		cache = create(null);
 		waiting = create(null);
 		promises = create(null);
-		conf.emit(&#x27;clearasync&#x27;, objectMap(oldCache, function (data) { return [data]; }));
+		conf.emit('clearasync', objectMap(oldCache, function (data) { return [data]; }));
 	});
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -2405,13 +2398,13 @@ Memoize statistics:
 	var cache, postfix;
 
 	cache = create(null);
-	postfix = ((options.async &#x26;&#x26; extensions.async) || (options.promise &#x26;&#x26; extensions.promise))
-		? &#x27;async&#x27; : &#x27;&#x27;;
+	postfix = ((options.async &amp;&amp; extensions.async) || (options.promise &amp;&amp; extensions.promise))
+		? 'async' : '';
 
-	conf.on(&#x27;set&#x27; + postfix, function (id, length) { cache[id] = length || 1; });
-	conf.on(&#x27;get&#x27; + postfix, function (id) { ++cache[id]; });
-	conf.on(&#x27;delete&#x27; + postfix, function (id) { delete cache[id]; });
-	conf.on(&#x27;clear&#x27; + postfix, function () { cache = {}; });
+	conf.on('set' + postfix, function (id, length) { cache[id] = length || 1; });
+	conf.on('get' + postfix, function (id) { ++cache[id]; });
+	conf.on('delete' + postfix, function (id) { delete cache[id]; });
+	conf.on('clear' + postfix, function () { cache = {}; });
 
 	defineProperties(conf.memoized, {
 		deleteRef: d(function () {
@@ -2453,8 +2446,8 @@ Memoize statistics:
 	var length;
 	if (isNaN(optsLength)) {
 		length = fnLength;
-		if (!(length &#x3e;= 0)) return 1;
-		if (isAsync &#x26;&#x26; length) return length - 1;
+		if (!(length &gt;= 0)) return 1;
+		if (isAsync &amp;&amp; length) return length - 1;
 		return length;
 	}
 	if (optsLength === false) return false;
@@ -2479,7 +2472,7 @@ Memoize statistics:
     <ul>
     <li>description and source-code<pre class="apidocCodePre">resolve_normalize = function (userNormalizer) {
 	var normalizer;
-	if (typeof userNormalizer === &#x27;function&#x27;) return { set: userNormalizer, get: userNormalizer };
+	if (typeof userNormalizer === 'function') return { set: userNormalizer, get: userNormalizer };
 	normalizer = { get: callable(userNormalizer.get) };
 	if (userNormalizer.set !== undefined) {
 		normalizer.set = callable(userNormalizer.set);
@@ -2556,25 +2549,25 @@ Memoize statistics:
 		callable(fn);
 
 		// Do not memoize already memoized function
-		if (hasOwnProperty.call(fn, &#x27;__memoized__&#x27;) &#x26;&#x26; !options.force) return fn;
+		if (hasOwnProperty.call(fn, '__memoized__') &amp;&amp; !options.force) return fn;
 
-		length = resolveLength(options.length, fn.length, options.async &#x26;&#x26; extensions.async);
+		length = resolveLength(options.length, fn.length, options.async &amp;&amp; extensions.async);
 		options.length = length ? length - 1 : 0;
 		map = new WeakMap();
 
 		if (options.resolvers) resolve = resolveResolve(options.resolvers);
 		if (options.normalizer) normalizer = resolveNormalize(options.normalizer);
 
-		if ((length === 1) &#x26;&#x26; !normalizer &#x26;&#x26; !(options.async &#x26;&#x26; extensions.async) &#x26;&#x26;
-				!(options.dispose &#x26;&#x26; extensions.dispose) &#x26;&#x26; !(options.maxAge &#x26;&#x26; extensions.maxAge) &#x26;&#x26;
-				!(options.max &#x26;&#x26; extensions.max) &#x26;&#x26; !(options.refCounter &#x26;&#x26; extensions.refCounter)) {
+		if ((length === 1) &amp;&amp; !normalizer &amp;&amp; !(options.async &amp;&amp; extensions.async) &amp;&amp;
+				!(options.dispose &amp;&amp; extensions.dispose) &amp;&amp; !(options.maxAge &amp;&amp; extensions.maxAge) &amp;&amp;
+				!(options.max &amp;&amp; extensions.max) &amp;&amp; !(options.refCounter &amp;&amp; extensions.refCounter)) {
 			return defineProperties(function (obj) {
 				var result, args = arguments;
 				if (resolve) args = resolve(args);
 				obj = args[0];
 				if (map.has(obj)) return map.get(obj);
 				result = fn.apply(this, args);
-				if (map.has(obj)) throw customError(&#x22;Circular invocation&#x22;, &#x27;CIRCULAR_INVOCATION&#x27;);
+				if (map.has(obj)) throw customError("Circular invocation", 'CIRCULAR_INVOCATION');
 				map.set(obj, result);
 				return result;
 			}, {
@@ -2667,25 +2660,25 @@ Memoize statistics:
 		callable(fn);
 
 		// Do not memoize already memoized function
-		if (hasOwnProperty.call(fn, &#x27;__memoized__&#x27;) &#x26;&#x26; !options.force) return fn;
+		if (hasOwnProperty.call(fn, '__memoized__') &amp;&amp; !options.force) return fn;
 
-		length = resolveLength(options.length, fn.length, options.async &#x26;&#x26; extensions.async);
+		length = resolveLength(options.length, fn.length, options.async &amp;&amp; extensions.async);
 		options.length = length ? length - 1 : 0;
 		map = new WeakMap();
 
 		if (options.resolvers) resolve = resolveResolve(options.resolvers);
 		if (options.normalizer) normalizer = resolveNormalize(options.normalizer);
 
-		if ((length === 1) &#x26;&#x26; !normalizer &#x26;&#x26; !(options.async &#x26;&#x26; extensions.async) &#x26;&#x26;
-				!(options.dispose &#x26;&#x26; extensions.dispose) &#x26;&#x26; !(options.maxAge &#x26;&#x26; extensions.maxAge) &#x26;&#x26;
-				!(options.max &#x26;&#x26; extensions.max) &#x26;&#x26; !(options.refCounter &#x26;&#x26; extensions.refCounter)) {
+		if ((length === 1) &amp;&amp; !normalizer &amp;&amp; !(options.async &amp;&amp; extensions.async) &amp;&amp;
+				!(options.dispose &amp;&amp; extensions.dispose) &amp;&amp; !(options.maxAge &amp;&amp; extensions.maxAge) &amp;&amp;
+				!(options.max &amp;&amp; extensions.max) &amp;&amp; !(options.refCounter &amp;&amp; extensions.refCounter)) {
 			return defineProperties(function (obj) {
 				var result, args = arguments;
 				if (resolve) args = resolve(args);
 				obj = args[0];
 				if (map.has(obj)) return map.get(obj);
 				result = fn.apply(this, args);
-				if (map.has(obj)) throw customError(&#x22;Circular invocation&#x22;, &#x27;CIRCULAR_INVOCATION&#x27;);
+				if (map.has(obj)) throw customError("Circular invocation", 'CIRCULAR_INVOCATION');
 				map.set(obj, result);
 				return result;
 			}, {
@@ -2766,3 +2759,4 @@ Memoize statistics:
     ]
 </div>
 </div>
+</body></html>
