@@ -1,6 +1,6 @@
 # npmdoc-memoizee
 
-#### api documentation for  [memoizee (v0.4.4)](https://github.com/medikoo/memoizee#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-memoizee.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-memoizee) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-memoizee.svg)](https://travis-ci.org/npmdoc/node-npmdoc-memoizee)
+#### basic api documentation for  [memoizee (v0.4.4)](https://github.com/medikoo/memoizee#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-memoizee.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-memoizee) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-memoizee.svg)](https://travis-ci.org/npmdoc/node-npmdoc-memoizee)
 
 #### Memoize/cache function results
 
@@ -87,7 +87,8 @@
         "lint-medikoo": "xlint --linter=node_modules/xlint-jslint-medikoo/index.js",
         "test": "tad"
     },
-    "version": "0.4.4"
+    "version": "0.4.4",
+    "bin": {}
 }
 ```
 
